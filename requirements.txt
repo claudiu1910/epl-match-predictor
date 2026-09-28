@@ -1,0 +1,32 @@
+# Pinned to the versions this project was built and tested with (Python 3.14, macOS arm64).
+# macOS also needs the OpenMP runtime for XGBoost:  brew install libomp
+
+# Modelling
+xgboost==3.4.1
+scikit-learn==1.9.1        # CalibratedClassifierCV(method="temperature") + FrozenEstimator need >= 1.8
+shap==0.52.0
+scipy==1.18.1
+numpy==2.5.3
+pandas==3.0.6
+joblib==1.6.0
+
+# Data sources
+requests==2.34.2
+urllib3==2.8.0
+beautifulsoup4==4.15.0     # fallback parser for Understat's legacy page layout
+
+# Web app
+fastapi==0.141.1
+starlette==1.6.0
+uvicorn[standard]==0.53.0
+pydantic==2.13.5
+Jinja2==3.1.6
+APScheduler==3.11.3
+
+# CLI & reports
+rich==15.0.0
+matplotlib==3.11.2
+
+# Tests
+pytest==9.1.1
+httpx==0.28.1              # FastAPI TestClient

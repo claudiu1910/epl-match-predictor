@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "epl-dashboard",
+      "runtimeExecutable": ".venv/bin/uvicorn",
+      "runtimeArgs": ["app:app", "--port", "8000"],
+      "port": 8000
+    }
+  ]
+}
