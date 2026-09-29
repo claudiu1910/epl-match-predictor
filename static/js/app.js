@@ -103,8 +103,19 @@
   }
 
   function loadAll() {
-    loadFixtures();
-    loadTeams().then(loadModel);  // the tactics table lists clubs per style
+    const deepLink = fixtureFromHash();
+    if (deepLink) openFixture(deepLink, false);
+    // Sections render after their data arrives, so re-apply a #section link once they do.
+    Promise.all([loadFixtures(), loadTeams().then(loadModel)]).then(applyHashScroll);
+  }
+
+  function applyHashScroll() {
+    const hash = location.hash;
+    if (!hash || fixtureFromHash()) return;
+    requestAnimationFrame(() => {
+      const target = document.querySelector(hash);
+      if (target) target.scrollIntoView({ block: "start" });
+    });
   }
 
   // ------------------------------------------------------------------ fixtures
@@ -189,13 +200,20 @@
       </button>`;
   }
 
-  async function openFixture(id) {
+  async function openFixture(id, updateHash = true) {
     openModal("Loading…", "");
+    if (updateHash) history.replaceState(null, "", `#fixture=${encodeURIComponent(id)}`);
     try {
       renderDeepDive(await api(`/api/fixtures/${encodeURIComponent(id)}`));
     } catch (err) {
       $("#modal-body").innerHTML = `<p class="text-rose-300 text-sm">${esc(err.message)}</p>`;
     }
+  }
+
+  /** #fixture=<id> deep links: shareable, and they survive a reload. */
+  function fixtureFromHash() {
+    const m = /^#fixture=(.+)$/.exec(location.hash);
+    return m ? decodeURIComponent(m[1]) : null;
   }
 
   // ------------------------------------------------------------------ modal
@@ -210,6 +228,7 @@
   function closeModal() {
     $("#modal").classList.add("hidden");
     document.body.style.overflow = "";
+    if (fixtureFromHash()) history.replaceState(null, "", location.pathname + location.search);
     ["dd-probs", "dd-radar", "dd-heat", "dd-shap"].forEach((k) => { if (S.charts[k]) { S.charts[k].destroy(); delete S.charts[k]; } });
   }
 
