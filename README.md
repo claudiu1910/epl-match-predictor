@@ -15,6 +15,32 @@ when you press **Sync data**), so the rolling form, xG and PPDA features stay cu
 > Model output, not betting advice. The value flags are backtested below. So far they have
 > **not** beaten Bet365.
 
+## Screenshots
+
+**Gameweek hub.** One card per fixture: the calibrated 1X2 bar, each side's tactical
+archetype, the most likely scoreline from the simulation, expected goals, Over 2.5 and
+BTTS, and a warning when key attackers are missing.
+
+![Gameweek hub with fixture cards showing 1X2 probability bars, tactical style chips and simulation summaries](docs/screenshots/dashboard.png)
+
+**Fixture deep dive.** Probabilities before and after the availability modifier next to
+the Poisson simulation, a percentile radar, and the 10,000-run scoreline heatmap with the
+goals markets beside it.
+
+![Deep dive for Liverpool v Manchester City: probabilities, team radar, scoreline heatmap and goals markets](docs/screenshots/deep-dive.png)
+
+**Explanations and value.** SHAP drivers in percentage points (baseline + drivers +
+calibration = the final probability), the EV table against your own odds, and the squad
+availability that moved the expected goals.
+
+![SHAP driver chart, value check table with a +EV flag, and squad availability for both teams](docs/screenshots/simulator-value.png)
+
+**Model validation.** Every number is out-of-time: the hold-out season, the three-season
+walk-forward backtest, value-flag ROI by odds band, goal-model checks, tactical centroids
+and the calibration curves.
+
+![Model validation panel: hold-out and walk-forward metrics, value-bet ROI by odds band, goal model, tactical archetypes and calibration curves](docs/screenshots/model-validation.png)
+
 ## Quick start
 
 ```bash
